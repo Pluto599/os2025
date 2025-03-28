@@ -1,16 +1,15 @@
 #include "lib.h"
 #include "types.h"
 
-//用户程序，在用户空间，lab测试方法：make clean后make，然后make play
+// 用户程序，在用户空间，lab测试方法：make clean后make，然后make play
 
-
-int uEntry(void) {
+int uEntry(void)
+{
 
 	uint16_t selector;
-	asm volatile("movw %%ss, %0":"=m"(selector)); 
-	asm volatile("movw %%ax, %%ds"::"a"(selector));
-	
-	
+	asm volatile("movw %%ss, %0" : "=m"(selector));
+	asm volatile("movw %%ax, %%ds" ::"a"(selector));
+
 	printf("I/O test begin...\n");
 	printf("the answer should be:\n");
 	printf("#######################################################\n");
@@ -34,24 +33,26 @@ int uEntry(void) {
 	printf("Now I will test your getChar: ");
 	printf("1 + 1 = ");
 	char num = getChar();
-	printf("%c * 123 = 246\n",num);
+	printf("%c * 123 = 246\n", num);
 	printf("Now I will test your getStr: ");
 	printf("Alice is stronger than ");
 	char name[20];
-	getStr(name,20);
-	printf("%s is weaker than Alice\n",name);
+	getStr(name, 20);
+	printf("%s is weaker than Alice\n", name);
 	printf("=======================================================\n");
 	printf("Sleep test begin...\n");
 	struct TimeInfo tm;
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 10; i++)
+	{
 		sleep(1);
 		now(&tm);
 		printf("Current RTC time: %d-%d-%d %d:%d:%d. \n",
-			tm.year, tm.month, tm.m_day, tm.hour, tm.minute, tm.second);
+			   tm.year, tm.month, tm.m_day, tm.hour, tm.minute, tm.second);
 		printf("slept 1 second for %d time(s).\n", i);
 	}
 	printf("Test end!!! Good luck!!!\n");
 
-	while(1);
+	while (1)
+		;
 	return 0;
 }

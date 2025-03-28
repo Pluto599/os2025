@@ -10,6 +10,7 @@ void initVga() {
 	displayRow = 0;
 	displayCol = 0;
 	displayClear = 0;
+
 	clearScreen();
 	updateCursor(0, 0);
 }

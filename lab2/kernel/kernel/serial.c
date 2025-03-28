@@ -27,14 +27,50 @@ void putStr(char *ch){
 	}
 }
 
+// void putNum(int num){
+//     if (num == 0){ putChar('0'); return;}
+//     if (num < 0){ putChar('-'); num = -num;}
+//     while(num){
+//         char ch = (num % 10) + '0';
+//         putChar(ch);
+//         num /= 10;
+//     }
+// }
 void putNum(int num){
     if (num == 0){ putChar('0'); return;}
     if (num < 0){ putChar('-'); num = -num;}
+    
+    // 保存所有数字，然后反向输出
+    char digits[16];
+    int count = 0;
+    
     while(num){
-        char ch = (num % 10) + '0';
-        putChar(ch);
+        digits[count++] = (num % 10) + '0';
         num /= 10;
+    }
+    
+    // 反向输出数字
+    while(count > 0){
+        putChar(digits[--count]);
     }
 }
 
+void putHex(unsigned int num) {
+    putStr("0x");
+    if (num == 0) { putChar('0'); return; }
+    
+    char hex_digits[16] = "0123456789ABCDEF";
+    char hex[8];
+    int i = 0;
+    
+    while (num > 0 && i < 8) {
+        hex[i++] = hex_digits[num & 0xF];
+        num >>= 4;
+    }
+    
+    // 反向输出
+    while (i > 0) {
+        putChar(hex[--i]);
+    }
+}
 

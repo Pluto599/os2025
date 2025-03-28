@@ -60,11 +60,12 @@ irqSecException:
 	pushl $-1
 	jmp asmDoIrq
 
+# TODO3: finished
 .global irqKeyboard
 irqKeyboard:
 	pushl $0
 	# TODO: 将irqKeyboard的中断向量号压入栈
-
+	pushl $0x21
 	jmp asmDoIrq
 
 .global irqTimer

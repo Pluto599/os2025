@@ -4,7 +4,7 @@
 SegDesc gdt[NR_SEGMENTS];       // the new GDT, NR_SEGMENTS=7, defined in x86/memory.h
 TSS tss;
 
-//init GDT and LDT
+//init GDT and LDT and TSS
 void initSeg() { // setup kernel segements
 	gdt[SEG_KCODE] = SEG(STA_X | STA_R, 0,       0xffffffff, DPL_KERN);
 	gdt[SEG_KDATA] = SEG(STA_W,         0,       0xffffffff, DPL_KERN);
@@ -35,6 +35,7 @@ void initSeg() { // setup kernel segements
 }
 
 void enterUserSpace(uint32_t entry) {
+
 	/*
 	 * Before enter user space 
 	 * you should set the right segment registers here
@@ -57,12 +58,31 @@ size of kernel is not greater than 200*512 bytes, i.e., 100KB
 user program is loaded to location 0x200000, i.e., 2MB
 size of user program is not greater than 200*512 bytes, i.e., 100KB
 */
-
+// TODO6: finished
 void loadUMain(void) {
 	// TODO: 参照bootloader加载内核的方式，由kernel加载用户程序
-	
 
+	int i = 0;
+	int phoff = 0x34; // program header offset
+	int offset = 0x1000; // .text section offset
+	uint32_t elf = 0x200000; // physical memory addr to load
+	uint32_t uMainEntry = 0x200000;
+
+	for (i = 0; i < 200; i++) {
+		readSect((void*)(elf + i*512), 201+i);
+	}
+	
+	ELFHeader* eh = (ELFHeader *)elf;
+	phoff = eh->phoff;
+	ProgramHeader* ph = (ProgramHeader *)(elf + phoff);
+	offset = ph->off;
+
+	uMainEntry = eh->entry; 
+
+	for (i = 0; i < 200 * 512; i++) {
+		*(uint8_t *)(elf + i) = *(uint8_t *)(elf + i + offset);
+	}
 
 	enterUserSpace(uMainEntry);
-	
+
 }

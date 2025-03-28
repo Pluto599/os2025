@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "serial.h": "c",
+        "stdio.h": "c",
+        "common.h": "c",
+        "device.h": "c",
+        "vga.h": "c",
+        "disk.h": "c",
+        "lib.h": "c",
+        "types.h": "c",
+        "x86.h": "c"
+    }
+}

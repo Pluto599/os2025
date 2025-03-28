@@ -2,7 +2,8 @@
 
 #define SECTSIZE 512
 
-
+// TODO1:finished
+//  完善 bootMain() 函数	
 void bootMain(void) {
 	int i = 0;
 	int phoff = 0x34; // program header offset
@@ -16,11 +17,20 @@ void bootMain(void) {
 	}
 
 	// TODO: 阅读boot.h查看elf相关信息，填写kMainEntry、phoff、offset
+	// ELFHeader* eh = (ELFHeader *)elf;
+	// phoff = eh->phoff;
+	// ProgramHeader* ph = (ProgramHeader *)(elf + phoff);
+	// offset = ph->off;
+	
+	// kMainEntry = (void(*)(void))(eh->entry);
 
+	kMainEntry = (void(*)(void))((struct ELFHeader *)elf)->entry;
+	phoff = ((struct ELFHeader *)elf)->phoff;
+	offset = ((struct ProgramHeader *)(elf + phoff))->off;
 
 	for (i = 0; i < 200 * 512; i++) {
-			*(unsigned char *)(elf + i) = *(unsigned char *)(elf + i + offset);
-		}
+		*(unsigned char *)(elf + i) = *(unsigned char *)(elf + i + offset);
+	}
 
 	kMainEntry();
 }

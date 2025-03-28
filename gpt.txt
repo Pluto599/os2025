@@ -1,0 +1,3 @@
+chmod +x utils/genBoot.pl
+chmod +x utils/genKernel.pl
+
