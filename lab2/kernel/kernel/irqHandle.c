@@ -1,7 +1,7 @@
 #include "x86.h"
 #include "device.h"
 
-// TODO5:
+// TODO5: finished
 // 实现 irqHandle() 函数，处理各种中断
 // 完善 KeyboardHandle() 函数处理键盘输入
 // 实现 timerHandler() 函数处理时钟中断

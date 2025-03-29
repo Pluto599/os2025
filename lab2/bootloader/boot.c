@@ -17,16 +17,12 @@ void bootMain(void) {
 	}
 
 	// TODO: 阅读boot.h查看elf相关信息，填写kMainEntry、phoff、offset
-	// ELFHeader* eh = (ELFHeader *)elf;
-	// phoff = eh->phoff;
-	// ProgramHeader* ph = (ProgramHeader *)(elf + phoff);
-	// offset = ph->off;
+	ELFHeader* eh = (ELFHeader *)elf;
+	phoff = eh->phoff;
+	ProgramHeader* ph = (ProgramHeader *)(elf + phoff);
+	offset = ph->off;
 	
-	// kMainEntry = (void(*)(void))(eh->entry);
-
-	kMainEntry = (void(*)(void))((struct ELFHeader *)elf)->entry;
-	phoff = ((struct ELFHeader *)elf)->phoff;
-	offset = ((struct ProgramHeader *)(elf + phoff))->off;
+	kMainEntry = (void(*)(void))(eh->entry);
 
 	for (i = 0; i < 200 * 512; i++) {
 		*(unsigned char *)(elf + i) = *(unsigned char *)(elf + i + offset);

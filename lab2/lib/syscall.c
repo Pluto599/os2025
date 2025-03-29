@@ -63,7 +63,7 @@ int32_t syscall(int num, uint32_t a1, uint32_t a2,
 	return ret;
 }
 
-// TODO7:
+// TODO7: finished
 // 实现 getChar() 函数，从键盘获取一个字符
 // 实现 getStr() 函数，从键盘获取一个字符串
 // 完善 printf() 函数，支持 %d、%x、%s、%c 格式输出
